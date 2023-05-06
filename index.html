@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <!-- 地图 -->
+    <script type="text/javascript">
+      window._AMapSecurityConfig = {
+        securityJsCode: "364ddea3777be42afc5bb9a1866577ba",
+      };
+    </script>
+    <script
+      type="text/javascript"
+      src="https://webapi.amap.com/maps?v=2.0&key=803ca2e804cd060de5ea9128d979aebc&plugin=AMap.Driving"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css"
+    />
+    <script
+      type="text/javascript"
+      src="https://cache.amap.com/lbs/static/addToolbar.js"
+    ></script>
+    <script src="https://a.amap.com/jsapi_demos/static/demo-center/js/demoutils.js"></script>
+
+    <!-- Link Swiper's CSS -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/swiper@8/swiper-bundle.css"
+    />
+    <script src="https://unpkg.com/swiper@8/swiper-bundle.js"></script>
+    <!-- 引入 jQuery.js -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.4/jquery.js"></script>
+    <!-- 引入 echarts.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.2/echarts.min.js"></script>
+    <!-- Demo styles -->
+    <style>
+      html,
+      body {
+        position: relative;
+        height: 100%;
+      }
+      /* 第一题 */
+      #box {
+        width: 100%;
+        height: 100%;
+        background-color: #2e2d2d;
+      }
+      body {
+        background: #eee;
+        font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+        font-size: 14px;
+        color: #000;
+        margin: 0;
+        padding: 0;
+      }
+
+      .swiper {
+        width: 1100px;
+        height: 400px;
+        position: absolute;
+        top: 20px;
+      }
+      .mySwiper2 {
+        width: 100%;
+        height: 300px;
+        position: absolute;
+        top: 650px;
+      }
+      .swiper-slide {
+        text-align: center;
+        font-size: 18px;
+        background-color: #2e2d2d;
+
+        /* Center slide text vertically */
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        -webkit-justify-content: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+      }
+      .swiper-slide img {
+        display: block;
+        width: 70%;
+        height: 90%;
+        padding-bottom: 50px;
+        object-fit: cover;
+      }
+      .swiper-button-disabled {
+        display: none;
+      }
+      .swiper-button-prev,
+      .swiper-button-next {
+        color: white;
+      }
+      #rightBox {
+        width: 600px;
+        height: 350px;
+        background-color: #2e2d2d;
+        position: absolute;
+        right: 40px;
+        top: 20px;
+      }
+      #synopsis {
+        width: 600px;
+        height: 220px;
+        background-color: rgb(62, 61, 61);
+      }
+      #analogy {
+        width: 600px;
+        height: 100px;
+        background-color: rgb(62, 61, 61);
+      }
+      .mySwiper2 img {
+        width: 100%;
+        height: 80%;
+        padding-bottom: 56px;
+      }
+      .swiper-slide span {
+        display: inline-block;
+        position: absolute;
+        bottom: 10px;
+        width: 260px;
+        padding: 0 20px;
+      }
+      #mySwiper .save {
+        text-decoration: none;
+        color: white;
+        position: absolute;
+        bottom: 10px;
+        left: 400px;
+      }
+      #mySwiper .look {
+        text-decoration: none;
+        color: white;
+        position: absolute;
+        bottom: 10px;
+      }
+      .mySwiper2 .swiper-slide {
+        width: 25%;
+        height: 100%;
+        background-color: white;
+        opacity: 0.4;
+      }
+      .mySwiper2 .swiper-slide-thumb-active {
+        opacity: 1;
+      }
+      /* 第二题 */
+      #twoDemo {
+        position: absolute;
+        top: 1100px;
+      }
+      #main {
+        margin-top: 50px;
+        width: 900px;
+        height: 500px;
+        position: absolute;
+        left: 200px;
+      }
+      #buttonBox {
+        width: 800px;
+        position: absolute;
+        left: 700px;
+      }
+      #buttonBox button {
+        border: 0;
+        width: 80px;
+        height: 30px;
+        border-radius: 8px;
+      }
+      #leftBox,
+      #main {
+        display: inline-block;
+      }
+      #leftBox {
+        position: absolute;
+        top: 200px;
+      }
+      #leftBox-1 {
+        width: 150px;
+        height: 100px;
+        background-color: rgb(165, 203, 233, 0.5);
+        border-radius: 8px;
+      }
+      #leftBox-2 {
+        width: 150px;
+        height: 100px;
+        background-color: rgb(165, 203, 233, 0.5);
+        border-radius: 8px;
+        margin-top: 10px;
+      }
+      .color {
+        background-color: rgb(80, 125, 239);
+      }
+      /* 第三题 */
+      #container {
+        margin: auto;
+        width: 800px;
+        height: 800px;
+        position: absolute;
+        left: 700px;
+      }
+      #threeDemo {
+        position: absolute;
+        top: 1700px;
+      }
+      #start {
+        width: 100px;
+        height: 50px;
+        background-color: aquamarine;
+        border-radius: 5%;
+        border: none;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 第一题 -->
+    <div id="box">
+      <!-- Swiper -->
+      <div class="swiper mySwiper">
+        <div class="swiper-wrapper" id="mySwiper"></div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+      </div>
+      <div thumbsSlider="" class="swiper mySwiper2">
+        <div class="swiper-wrapper" id="mySwiper2"></div>
+      </div>
+      <!-- 简介 -->
+      <div id="rightBox">
+        <!-- 概要 -->
+        <div id="synopsis">
+          <h2 style="color: white">山东喀什那得看是快乐的那算了</h2>
+        </div>
+        <!-- 类似 -->
+        <div id="analogy">
+          <p>类似</p>
+        </div>
+      </div>
+    </div>
+    <!-- 第二题 -->
+    <div id="twoDemo">
+      <div id="leftBox">
+        <div id="leftBox-1">
+          <div
+            style="
+              width: 10px;
+              height: 10px;
+              background-color: blue;
+              display: inline-block;
+              margin-left: 10px;
+            "
+          ></div>
+          <span>pv(总浏览量)</span>
+          <p style="padding-left: 20px">0</p>
+        </div>
+        <div id="leftBox-2">
+          <div
+            style="
+              width: 10px;
+              height: 10px;
+              background-color: green;
+              display: inline-block;
+              margin-left: 10px;
+            "
+          ></div>
+          <span>uv(总访问量)</span>
+          <p style="padding-left: 20px">0</p>
+        </div>
+      </div>
+      <div id="main"></div>
+      <div id="buttonBox">
+        <button onclick="today()" class="color">今日</button>
+        <button onclick="yesterday()">昨日</button>
+        <button onclick="weekday()">7日</button>
+        <button onclick="mounth()">30日</button>
+      </div>
+    </div>
+    <!-- 第三题 -->
+    <div id="threeDemo">
+      <div id="container"></div>
+      <div id="panel">
+        <button id="start" onclick="btn()">开始导航</button>
+      </div>
+    </div>
+
+    <!-- Initialize Swiper -->
+    <!-- 第一题 -->
+    <script>
+      let imgindex = 0;
+      let Swiperdata = [
+        {
+          img: "https://img.zcool.cn/community/01b9b560ab0c6e11013eaf706ca5e6.jpg@1280w_1l_2o_100sh.jpg",
+          title: "山东喀什那得看是快乐的那算了",
+        },
+        {
+          img: "https://img.zcool.cn/community/01ad2b60ab0c6c11013f4720df1851.jpg@1280w_1l_2o_100sh.jpg",
+          title: "爱上了好的考试卷你打开拉萨",
+        },
+        {
+          img: "https://img.zcool.cn/community/01b25260ab0c6c11013f4720736556.jpg@1280w_1l_2o_100sh.jpg",
+          title: "的念佛阿斯顿弄阿斯顿",
+        },
+        {
+          img: "https://img.zcool.cn/community/010a5160ab0c6c11013f472071124b.jpg@1280w_1l_2o_100sh.jpg",
+          title: "的风景平时对你发票",
+        },
+        {
+          img: "https://img.zcool.cn/community/01269160ab0c6f11013eaf704cf482.jpg@1280w_1l_2o_100sh.jpg",
+          title: "喀什到时你的哦闹",
+        },
+      ];
+      $(document).ready(function () {
+        showSwiper();
+        var swiper2 = new Swiper(".mySwiper2", {
+          spaceBetween: 10,
+          slidesPerView: 5,
+          freeMode: true,
+          watchSlidesProgress: true,
+        });
+        var swiper = new Swiper(".mySwiper", {
+          navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+          },
+          thumbs: {
+            swiper: swiper2,
+          },
+          on: {
+            slideChangeTransitionStart: function () {
+              $("#synopsis h2").html(Swiperdata[this.activeIndex].title);
+            },
+          },
+        });
+      });
+      function showSwiper() {
+        let html = "";
+        let html2 = "";
+        $(Swiperdata).each((index, item) => {
+          html += `<div class="swiper-slide">
+                      <img
+                        src="${item.img}"
+                        alt=""
+                        imgIndex = "${index}"
+                      />
+                      <a class="save" href="${item.img}" download="${item.img}">保存照片</a>
+                      <a class="look" href="${item.img}">查看照片</a>
+                    </div>`;
+          html2 += `<div class="swiper-slide" imgindex = ${index}>
+                      <img
+                        src="${item.img}"
+                        alt=""
+                      />
+                      <span>${item.title}</span>
+                    </div>`;
+        });
+        $("#mySwiper").html(html);
+        $("#mySwiper2").html(html2);
+      }
+    </script>
+    <!-- 第二题 -->
+    <script>
+      const dataToday = [
+        ["00:00", 10, 21],
+        ["01:00", 20, 15],
+        ["02:00", 120, 22],
+        ["03:00", 50, 11],
+        ["04:00", 60, 16],
+        ["05:00", 30, 11],
+        ["06:00", 130, 27],
+        ["07:00", 20, 21],
+        ["08:00", 10, 21],
+        ["09:00", 5, 21],
+        ["10:00", 9, 21],
+        ["11:00", 20, 21],
+        ["12:00", 190, 21],
+        ["13:00", 90, 21],
+        ["14:00", 20, 21],
+        ["15:00", 30, 21],
+        ["16:00", 50, 11],
+        ["17:00", 55, 51],
+        ["18:00", 53, 11],
+        ["19:00", 12, 31],
+        ["20:00", 45, 51],
+        ["21:00", 76, 11],
+        ["22:00", 87, 61],
+        ["23:00", 10, 41],
+      ];
+      const data = [
+        ["2000-06-05", 116, 201],
+        ["2000-06-06", 129, 125],
+        ["2000-06-07", 135, 212],
+        ["2000-06-08", 86, 121],
+        ["2000-06-09", 73, 41],
+        ["2000-06-10", 85, 121],
+        ["2000-06-11", 73, 267],
+        ["2000-06-12", 68, 281],
+        ["2000-06-13", 92, 241],
+        ["2000-06-14", 130, 221],
+        ["2000-06-15", 245, 211],
+        ["2000-06-16", 139, 241],
+        ["2000-06-17", 115, 261],
+        ["2000-06-18", 111, 271],
+        ["2000-06-19", 309, 281],
+        ["2000-06-20", 206, 231],
+        ["2000-06-21", 137, 121],
+        ["2000-06-22", 128, 21],
+        ["2000-06-23", 85, 131],
+        ["2000-06-24", 94, 51],
+        ["2000-06-25", 71, 11],
+        ["2000-06-26", 106, 21],
+        ["2000-06-27", 84, 31],
+        ["2000-06-28", 93, 41],
+        ["2000-06-29", 85, 21],
+        ["2000-06-30", 73, 71],
+        ["2000-07-01", 83, 91],
+        ["2000-07-02", 125, 101],
+        ["2000-07-03", 107, 31],
+        ["2000-07-04", 82, 61],
+        ["2000-07-05", 44, 31],
+      ];
+
+      let dateList;
+      let valueList;
+      let valueList2;
+      let weekData = [];
+      //总访问量
+      let sum = 0;
+      //总浏览量
+      let sum2 = 0;
+      var chartDom = document.getElementById("main");
+      var myChart = echarts.init(chartDom);
+      var option;
+      $(document).ready(function () {
+        today();
+        dataToday.map(function (data) {
+          sum += data[2];
+          sum2 += data[1];
+        });
+        $("#leftBox-2 p").html(sum);
+        $("#leftBox-1 p").html(sum2);
+      });
+      $("#buttonBox").on("click", "button", function () {
+        $(this).addClass("color");
+        for (const item of $("#buttonBox button").not(this)) {
+          $(item).removeClass("color");
+        }
+        if ($(this).html() == "今日") {
+          dataToday.map(function (data) {
+            sum += data[2];
+            sum2 += data[1];
+          });
+        } else if ($(this).html() == "昨日") {
+          dataToday.map(function (data) {
+            sum += data[2];
+            sum2 += data[1];
+          });
+        } else if ($(this).html() == "7日") {
+          let data1 = [];
+          for (let i = 0; i < 7; i++) {
+            data1.push(data[i]);
+          }
+          data1.map(function (data) {
+            sum += data[2];
+            sum2 += data[1];
+          });
+        } else if ($(this).html() == "30日") {
+          data.map(function (data) {
+            sum += data[2];
+            sum2 += data[1];
+          });
+        }
+        $("#leftBox-2 p").html(sum);
+        $("#leftBox-1 p").html(sum2);
+      });
+      function today() {
+        dateList = dataToday.map(function (item) {
+          return item[0];
+        });
+        valueList = dataToday.map(function (item) {
+          return item[1];
+        });
+        valueList2 = dataToday.map(function (item) {
+          return item[2];
+        });
+        Echarts(dateList, valueList);
+      }
+      function yesterday() {
+        //X轴
+        dateList = dataToday.map(function (item) {
+          return item[0];
+        });
+        //第一条折线
+        valueList = dataToday.map(function (item) {
+          return item[1];
+        });
+        //第二条
+        valueList2 = dataToday.map(function (item) {
+          return item[2];
+        });
+        Echarts(dateList, valueList);
+      }
+      function weekday() {
+        for (let i = 0; i < 7; i++) {
+          weekData.push(data[i]);
+        }
+        dateList = weekData.map(function (item) {
+          return item[0];
+        });
+        valueList = weekData.map(function (item) {
+          return item[1];
+        });
+        valueList2 = weekData.map(function (item) {
+          return item[2];
+        });
+        Echarts(dateList, valueList);
+      }
+      function mounth() {
+        dateList = data.map(function (item) {
+          return item[0];
+        });
+        valueList = data.map(function (item) {
+          return item[1];
+        });
+        valueList2 = data.map(function (item) {
+          return item[2];
+        });
+        option = {
+          // Make gradient line here
+          visualMap: [
+            {
+              show: false,
+              type: "continuous",
+              seriesIndex: 0,
+              min: 0,
+              max: 400,
+            },
+          ],
+          title: [
+            {
+              left: "center",
+              text: "浏览量分析",
+            },
+          ],
+          tooltip: {
+            trigger: "axis",
+          },
+          xAxis: [
+            {
+              data: dateList,
+            },
+          ],
+          yAxis: [
+            {
+              type: "value",
+              axisLabel: {
+                formatter: (value, index) => {
+                  return `${value / 1000}k`;
+                },
+              },
+            },
+          ],
+          series: [
+            {
+              type: "line",
+              showSymbol: false,
+              data: valueList,
+            },
+            {
+              type: "line",
+              showSymbol: false,
+              data: valueList2,
+            },
+          ],
+        };
+        option && myChart.setOption(option);
+      }
+      function Echarts(dateList, valueList) {
+        option = {
+          visualMap: [
+            {
+              show: false,
+              type: "continuous",
+              seriesIndex: 0,
+              min: 0,
+              max: 400,
+            },
+          ],
+          title: [
+            {
+              left: "center",
+              text: "浏览量分析",
+            },
+          ],
+          tooltip: {
+            trigger: "axis",
+          },
+          xAxis: [
+            {
+              data: dateList,
+            },
+          ],
+          yAxis: [{}],
+          series: [
+            {
+              type: "line",
+              showSymbol: false,
+              data: valueList,
+            },
+            {
+              type: "line",
+              showSymbol: false,
+              data: valueList2,
+            },
+          ],
+        };
+        option && myChart.setOption(option);
+      }
+    </script>
+    <!-- 第三题 -->
+    <script type="text/javascript">
+      //基本地图加载
+      var map = new AMap.Map("container", {
+        resizeEnable: true,
+        center: [113.427589, 34.764916], //地图中心点
+        zoom: 15, //地图显示的缩放级别
+      });
+      //构造路线导航类
+      var driving = new AMap.Driving({
+        map: map,
+        panel: "panel",
+      });
+      // 根据起终点名称规划驾车导航路线
+      function btn() {
+        // 根据起终点名称规划驾车导航路线
+        driving.search(
+          [
+            { keyword: "郑州市荥阳区奥特科创7号楼" },
+            { keyword: "郑州市登封市" },
+          ],
+          function (status, result) {
+            if (status === "complete") {
+              log.success("绘制驾车路线完成");
+            } else {
+              log.error("获取驾车数据失败：" + result);
+            }
+          }
+        );
+      }
+    </script>
+  </body>
+</html>
